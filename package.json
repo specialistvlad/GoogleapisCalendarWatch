@@ -9,7 +9,9 @@
   "dependencies": {
     "body-parser": "^1.12.3",
     "express": "~4.9.x",
-    "googleapis": "^2.0.2"
+    "googleapis": "^2.0.2",
+    "moment": "^2.10.2",
+    "remove": "^0.1.5"
   },
   "engines": {
     "node": "0.12.2"

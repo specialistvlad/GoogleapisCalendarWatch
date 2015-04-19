@@ -1,6 +1,8 @@
+//*****************************************
+//             Google calendar
+//*****************************************
 var google = require('googleapis');
 var calendar = google.calendar('v3');
-
 
 var SERVICE_ACCOUNT_EMAIL = '591251157405-nc3h4o1fr5vks4m7o90brt69n1stibsc@developer.gserviceaccount.com';
 var SERVICE_ACCOUNT_KEY_FILE = './keys/googleapi-privatekey.pem';
@@ -8,17 +10,41 @@ var jwtClient = new google.auth.JWT(
     SERVICE_ACCOUNT_EMAIL,
     SERVICE_ACCOUNT_KEY_FILE,
     null,
-    ['https://www.googleapis.com/auth/analytics.readonly']);
+    ['https://www.googleapis.com/auth/calendar']);
+var pathParams = { calendarId: 'stoneleaf.test@gmail.com' };
+var bodyParams = {
+    id: 'my-unique-id-00001',
+    type: 'web_hook',
+    address: 'https://secure-mountain-3276.herokuapp.com/hook'
+};
 
-function getEvents(auth) {
+/**
+ * Gets the next 10 events on the user's primary calendar.
+ *
+ * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
+ */
+function getEvents(auth, callback) {
     calendar.events.list({
         auth: auth,
-        calendarId: 'primary',
-        timeMin: (new Date()).toISOString(),
+        calendarId: 'stoneleaf.test@gmail.com',
+        /*timeMin: (new Date()).toISOString(),*/
         maxResults: 10,
         singleEvents: true,
         orderBy: 'startTime'
     }, function(err, response) {
+        callback(err, response);
+    });
+}
+
+
+jwtClient.authorize(function(err, tokens) {
+    if (err) {
+        console.log(err);
+        return;
+    }
+    console.log('Auth tokens:', tokens);
+
+    getEvents(jwtClient, function callback(err, response) {
         if (err) {
             console.log('There was an error contacting the Calendar service: ' + err);
             return;
@@ -35,16 +61,12 @@ function getEvents(auth) {
             }
         }
     });
-};
-
-jwtClient.authorize(function(err, tokens) {
-    if (err) {
-        console.log(err);
-        return;
-    }
-    console.log('Auth tokens:', tokens);
 });
 
+
+//*****************************************
+//         Temporary web server
+//*****************************************
 var events = [];
 var express = require('express');
 var app = express();
