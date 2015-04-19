@@ -1,0 +1,52 @@
+We have a new project which requires an interface running on node.js to googleapis Calander.  The first requirement is for node to access one calendar and retrieve busy information.
+
+If successful we will move on to building an oAuth Client (mobile) interface that will work via the node.js proxy.
+
+We are looking to work with a partner who can supplement our own technical resources when we are busy.
+
+
+I will describe the project in more detail for you.
+
+We require a node.js module that has only one dependency, the googleapis module.  The module will need to authenticate into a google calendars which will have events for a number of resources, the module will return the scheduled events for a given period.
+
+The oAuth credentials will be stored by the module and if the credential session is not open at the time of a request then the module will authenticate to google.
+
+We would like to know if updates to the calendar outside of this App (i.e.. by a user directly on the google calendar App will be updated....can we avoid making calls to google every time there is a request from node?).
+
+Please let us know if you need more information before starting.
+
+If we can agree on the above we can contract you for this piece of work.
+
+This is our first use of oDesk, and if successful we will repeat with similar work.
+
+Best Regards
+Peter
+
+Hi Vladyslav,
+
+Please let me know how you will deliver this & what testing we can undertake.
+
+I have created a calendar, stoneleaf.test@gmail.com with a password of odesktest
+
+There will be unto 5 types of events in the Calendar, each represent a person. I have put some same events in for next week.
+
+Usage of the API will indicate what periods are free for who.
+
+Best Regards
+Peter
+
+OFFER DETAILS
+
+Client: Peter Alderson (Stoneleaf IT Limited)
+Freelancer: Vladyslav Kazantsev
+Job Posting: Node.js googleapis OAuth Interface
+Contract Title: Node.js googleapis OAuth Interface
+Estimated Budget: $150.00
+
+Milestone 1: "Node.js googleapis OAuth Interface" -  $150.00 (funded)
+
+
+
+
+This offer will expire on Saturday, April 25, 2015.
+Review and accept this offer to start working now!
