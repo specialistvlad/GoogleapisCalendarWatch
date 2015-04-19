@@ -4,11 +4,9 @@
 var google = require('googleapis');
 var calendar = google.calendar('v3');
 
-var SERVICE_ACCOUNT_EMAIL = '591251157405-nc3h4o1fr5vks4m7o90brt69n1stibsc@developer.gserviceaccount.com';
-var SERVICE_ACCOUNT_KEY_FILE = './keys/googleapi-privatekey.pem';
 var jwtClient = new google.auth.JWT(
-    SERVICE_ACCOUNT_EMAIL,
-    SERVICE_ACCOUNT_KEY_FILE,
+    '591251157405-nc3h4o1fr5vks4m7o90brt69n1stibsc@developer.gserviceaccount.com',
+    './keys/googleapi-privatekey.pem',
     null,
     ['https://www.googleapis.com/auth/calendar']);
 var pathParams = { calendarId: 'stoneleaf.test@gmail.com' };
@@ -61,6 +59,23 @@ jwtClient.authorize(function(err, tokens) {
             }
         }
     });
+
+    calendar.events.watch({
+        auth: jwtClient,
+        calendarId: 'stoneleaf.test@gmail.com',
+        id: 'my-unique-id-000000001',
+        type: 'web_hook',
+        address: 'https://secure-mountain-3276.herokuapp.com/hook',
+        params: {
+            "ttl": 3600
+        }
+    }, function(err, res) {
+        if (err) {
+            console.log(err);
+            return;
+        }
+        console.log('Calendar.events.watch:', res);
+    });
 });
 
 
@@ -92,6 +107,19 @@ app.post('/hook', function(req, res) {
     console.log(req.body);
     events.push(req.body);
     res.send(200);
+});
+
+app.use(function (req, res, next) {
+    res.status(404);
+    console.log('Not found URL: %s', req.url);
+
+    res.send({error : 'Not found'});
+});
+
+app.use(function (err, req, res, next) {
+    res.status(err.status || 500);
+    console.log('Internal error(%d): %s', res.statusCode, err.toString());
+    res.send({error : err.toString()});
 });
 
 app.listen(app.get('port'), function() {
