@@ -66,7 +66,8 @@ app.get('/', function(req, res) {
     res.send(events);
 });
 
-app.get('/hook', function(req, res) {
+app.post('/hook', function(req, res) {
+    console.log(req.body);
     events.push(req.body);
     res.send(200);
 });
