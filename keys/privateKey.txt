@@ -1,0 +1,14 @@
+New Public/Private key pair generated
+The private key has been downloaded to your machine and serves as the only copy of this key.
+You are responsible for storing it securely.
+Your private key's password is displayed below. It will not be shown again.
+
+notasecret
+
+You must present this password in order to use the private key.
+
+Service Account
+"Client ID":"591251157405-nc3h4o1fr5vks4m7o90brt69n1stibsc.apps.googleusercontent.com"
+"Email address":"591251157405-nc3h4o1fr5vks4m7o90brt69n1stibsc@developer.gserviceaccount.com"
+"Certificate fingerprints": "08c51baacc2422d8425d6041951235400f19dda0"
+

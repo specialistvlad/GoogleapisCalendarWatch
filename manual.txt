@@ -1,0 +1,7 @@
+What if you want to use a Service Account that doesn’t require interaction with user & browser? For example, if you want to access Google Analytics programmatically?
+
+Well, what you’ll need to use is the JWT (JSON Web Token) method. Doing it this way wasn’t well documented, so I want to share how it’s done. I figured out how to do this through googleapis module’s test code. This is also another reason why I want people to write tests.
+
+First, you should have gotten a .p12 file and a secret to decrypt the file when you created the service account in Google API console. Run the following command to decrypt the p12 file.
+1
+openssl pkcs12 -in googleapi-privatekey.p12 -out googleapi-privatekey.pem -nocerts -nodes
