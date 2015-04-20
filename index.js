@@ -1,3 +1,4 @@
+
 //*****************************************
 //             Google calendar
 //*****************************************
@@ -9,12 +10,15 @@ var jwtClient = new google.auth.JWT(
     './keys/googleapi-privatekey.pem',
     null,
     ['https://www.googleapis.com/auth/calendar']);
+
 var pathParams = { calendarId: 'stoneleaf.test@gmail.com' };
 var bodyParams = {
     id: 'my-unique-id-00001',
     type: 'web_hook',
     address: 'https://secure-mountain-3276.herokuapp.com/hook'
 };
+
+var notifications = {list:[], hooks:[]};
 
 /**
  * Gets the next 10 events on the user's primary calendar.
@@ -34,6 +38,29 @@ function getEvents(auth, callback) {
     });
 }
 
+function watchEvents(auth, callback) {
+    var request = require('request');
+    var options = {
+        method: 'POST',
+        uri: 'https://www.googleapis.com/calendar/v3/calendars/stoneleaf.test%40gmail.com/events/watch',
+        headers: {
+            'Authorization': 'Bearer '+auth,
+            'content-type': 'application/json'
+        },
+        json: {
+            id: 'my-unique-id-00000220001',
+            type: 'web_hook',
+            address: 'https://secure-mountain-3276.herokuapp.com/hook',
+            "params": {
+                "ttl": "3000"
+            }
+        }
+    };
+    request(options,
+        function (error, response, body) {
+            callback(error, response, body);
+        });
+}
 
 jwtClient.authorize(function(err, tokens) {
     if (err) {
@@ -47,6 +74,7 @@ jwtClient.authorize(function(err, tokens) {
             console.log('There was an error contacting the Calendar service: ' + err);
             return;
         }
+        //console.log('events:', response);
         var events = response.items;
         if (events.length == 0) {
             console.log('No upcoming events found.');
@@ -60,29 +88,37 @@ jwtClient.authorize(function(err, tokens) {
         }
     });
 
-    calendar.events.watch({
+    watchEvents(tokens.access_token, function callback(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            console.log(body); // Show the HTML for the Google homepage.
+        } else
+            console.log(error, response.statusCode, body);
+    });
+
+    /*calendar.events.watch({
         auth: jwtClient,
         calendarId: 'stoneleaf.test@gmail.com',
-        id: 'my-unique-id-000000001',
+        id: 'my-unique-id-00000220001',
+        token: "my_token",
         type: 'web_hook',
         address: 'https://secure-mountain-3276.herokuapp.com/hook',
-        params: {
-            "ttl": 3600
+        "params": {
+            "ttl": "3000"
         }
+
     }, function(err, res) {
         if (err) {
             console.log(err);
             return;
         }
         console.log('Calendar.events.watch:', res);
-    });
+    });*/
 });
 
 
 //*****************************************
 //         Temporary web server
 //*****************************************
-var events = [];
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
@@ -100,13 +136,19 @@ app.set('port', (process.env.PORT || 5000));
 app.use(express.static(__dirname + '/public'));
 
 app.get('/', function(req, res) {
-    res.send(events);
+    console.log(req.body);
+    res.status(400).send({error: "Тут ничего нет, сорри :)"});
+});
+
+app.get(['/results','/result'], function(req, res) {
+    console.log(req.body);
+    res.status(200).send(notifications);
 });
 
 app.post('/hook', function(req, res) {
-    console.log(req.body);
-    events.push(req.body);
-    res.send(200);
+    console.log({header: req.headers, body:req.body});
+    events.push({header: req.headers, body:req.body});
+    res.status(200).send('');
 });
 
 app.use(function (req, res, next) {
