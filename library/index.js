@@ -1,3 +1,6 @@
+var google = require('googleapis');
+var calendar = google.calendar('v3');
+
 /*
  * @desc Watch for changes to Events resources.
  *
@@ -53,7 +56,7 @@ function GoogleapisCalendarWatch (params) {
                 this.list.push({"headers:": request.headers, "body:": request.body});
 
             if (this.on)
-                callback(null, request.headers, request.body);
+                this.on(null, request.headers, request.body);
             response.writeHead(200, {"Content-Type": "application/json"});
             response.write('');
             response.end();
@@ -95,36 +98,26 @@ GoogleapisCalendarWatch.prototype.on = function (argument) {
  */
 GoogleapisCalendarWatch.prototype.watch = function (params, callback) {
     this.auth.authorize(function(err, tokens) {
-        if (err) {
-            console.log(err);
-            return;
-        }
+        if (err)
+            return callback(err);
         this.token = tokens;
-
-        console.log('Auth success');
-
-
-        var google = require('googleapis');
-        var calendar = google.calendar('v3');
-        /*calendar.events.watch({
-            auth: token,
+        var options = {
+            auth: this.auth,
             calendarId: params.calendar,
             resource: {
                 id: params.id,
                 type: 'web_hook',
                 address: params.hook,
-                params: {
-                    ttl: params.expire
-                }
+                params: {}
             }
-        }, function(err, res) {
-            if (err) {
-                console.log(err);
-                return;
-            }
-            console.log('Calendar.events.watch:', res);
-        })*/
-    });
+        };
+        if (params.expire)
+            options.resource.params = {"ttl": params.expire.toString()};
+
+        calendar.events.watch(options, function(err, res) {
+            return callback(err, res);
+        });
+    }.bind(this));
 };
 
 module.exports = GoogleapisCalendarWatch;

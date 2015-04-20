@@ -17,11 +17,12 @@ lib.on(function(err, header, body) {
 });
 
 lib.watch({
+    id: 'My-id12345678900',
     calendar: 'stoneleaf.test@gmail.com',
     hook: 'https://secure-mountain-3276.herokuapp.com/hook'
 }, function (err, res) {
     if (err)
-        return console.log(err);
+        return console.log('watch', err);
     console.log('watch success', res);
 });
 
