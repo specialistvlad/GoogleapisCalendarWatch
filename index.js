@@ -147,7 +147,7 @@ app.get(['/results','/result'], function(req, res) {
 
 app.post('/hook', function(req, res) {
     console.log({header: req.headers, body:req.body});
-    events.push({header: req.headers, body:req.body});
+    notifications.list.push({header: req.headers, body:req.body});
     res.status(200).send('');
 });
 
