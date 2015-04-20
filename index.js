@@ -69,7 +69,7 @@ jwtClient.authorize(function(err, tokens) {
     }
     console.log('Auth tokens:', tokens);
 
-    getEvents(jwtClient, function callback(err, response) {
+    /*getEvents(jwtClient, function callback(err, response) {
         if (err) {
             console.log('There was an error contacting the Calendar service: ' + err);
             return;
@@ -86,7 +86,7 @@ jwtClient.authorize(function(err, tokens) {
                 console.log('%s - %s', start, event.summary);
             }
         }
-    });
+    });*/
 
     watchEvents(tokens.access_token, function callback(error, response, body) {
         if (!error && response.statusCode == 200) {
@@ -141,8 +141,7 @@ app.get('/', function(req, res) {
 });
 
 app.get(['/results','/result'], function(req, res) {
-    console.log(req.body);
-    res.status(200).send(notifications);
+    res.status(200).send(JSON.stringify(notifications));
 });
 
 app.post('/hook', function(req, res) {
