@@ -1,35 +1,44 @@
-address of site: https://secure-mountain-3276.herokuapp.com
+# Demo app for googleapis-calendar-watch
+## Information about demo project and module
+Registered domain [https://secure-mountain-3276.herokuapp.com](https://secure-mountain-3276.herokuapp.com)
 
+### Task
+1. We require a node.js module that has only one dependency, the googleapis module.
+2. Auto authenticate to google
+3. Callback that allow to know if calendar updated
 
+### ./keys folder
 
-# node-js-getting-started
+This folder contains secrets information from google developer console
 
-A barebones Node.js app using [Express 4](http://expressjs.com/).
+### How to generate *.pem key
 
-This application support the [Getting Started with Node on Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs) article - check it out.
+First, you should have gotten a .p12 file and a secret to decrypt
+the file when you created the service account in Google API console.
+Run the following command to decrypt the p12 file.
 
-## Running Locally
+```sh
+$ openssl pkcs12 -in googleapi-privatekey.p12 -out googleapi-privatekey.pem -nocerts -nodes
+```
+## Heroku Documentation
+
+### How to run
+### Running Locally
 
 Make sure you have [Node.js](http://nodejs.org/) and the [Heroku Toolbelt](https://toolbelt.heroku.com/) installed.
 
 ```sh
-$ git clone git@github.com:heroku/node-js-getting-started.git # or clone your own fork
-$ cd node-js-getting-started
 $ npm install
 $ npm start
 ```
 
 Your app should now be running on [localhost:5000](http://localhost:5000/).
 
-## Deploying to Heroku
+### Deploying to Heroku
 
-```
-$ heroku create
+```sh
 $ git push heroku master
-$ heroku open
 ```
-
-## Documentation
 
 For more information about using Node.js on Heroku, see these Dev Center articles:
 
