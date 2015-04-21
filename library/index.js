@@ -18,19 +18,19 @@ function GoogleapisCalendarWatch (params) {
 
     //Validate params
     if (!params)
-        new Error('Unable to read first argument with parameters.');
+        throw new Error('Unable to read first argument with parameters.');
 
     if (!params.auth)
-        new Error('Unable to read auth param.');
+        throw new Error('Unable to read auth param.');
 
     if (!params.auth.serviceAccount)
-        new Error('Unable to read serviceAccount param.');
+        throw new Error('Unable to read serviceAccount param.');
 
     if (!params.auth.certificatePath)
-        new Error('Unable to read certificatePath param.');
+        throw new Error('Unable to read certificatePath param.');
 
     if (!params.auth.scope)
-        new Error('Unable to read scope param.');
+        throw new Error('Unable to read scope param.');
 
     if (params.debug)
         this.list = [];
