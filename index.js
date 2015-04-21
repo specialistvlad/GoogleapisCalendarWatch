@@ -26,3 +26,9 @@ lib.watch({
     console.log('watch success', res);
 });
 
+lib.getEvents('stoneleaf.test@gmail.com', null, null, function (err, res) {
+    if (err)
+        return console.log('getEvents', err);
+    console.log('getEvents', res);
+});
+

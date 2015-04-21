@@ -120,4 +120,33 @@ GoogleapisCalendarWatch.prototype.watch = function (params, callback) {
     }.bind(this));
 };
 
+/**
+ * Gets events on the user's primary calendar.
+ * @param  {string} calendarId - email address
+ * @param  {date} from - required new Date() or null
+ * @param  {date} to - required new Date() or null
+ * @param  {function} callback
+ */
+GoogleapisCalendarWatch.prototype.getEvents = function (calendarId, from, to, callback) {
+    this.auth.authorize(function(err, tokens) {
+        if (err)
+            return callback(err);
+        this.token = tokens;
+        var options = {
+            auth: this.auth,
+            calendarId: calendarId,
+            singleEvents: true,
+            orderBy: 'startTime'
+        };
+        if (from)
+            options.timeMin = from.toISOString();
+        if (to)
+            options.timeMax = to.toISOString();
+
+        calendar.events.list(options, function(err, response) {
+            callback(err, response);
+        });
+    }.bind(this));
+};
+
 module.exports = GoogleapisCalendarWatch;
