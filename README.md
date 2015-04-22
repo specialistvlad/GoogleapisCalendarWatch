@@ -10,9 +10,9 @@ Registered domain [https://secure-mountain-3276.herokuapp.com](https://secure-mo
 2. You must check SSL domain validation. For example [https://www.sslshopper.com/ssl-checker.html](https://www.sslshopper.com/ssl-checker.html)
 You need have all green marks as ssl checker result, before you continue.
 3. Complete the site verification process using [https://www.google.com/webmasters/tools](https://www.google.com/webmasters/tools)
-You need upload file to the your server. Follow google manual please.
+You need upload file to your server. Follow google manual please.
 4. Go to the Google Developers Console. In the sidebar on the left APIs & auth > Push, Click Add domains and add domain "secure-mountain-3276.herokuapp.com"
-5. Go to the Google Developers Console. In the sidebar on the left APIs & auth > Credentials, Click Create new "Cliend Id"and generate key in pem format for "Service account"
+5. Go to the Google Developers Console. In the sidebar on the left APIs & auth > Credentials, Click Create new "Cliend Id" and generate key in p12 format for "Service account"
 
 ### Task
 1. We require a node.js module that has only one dependency, the googleapis module.
