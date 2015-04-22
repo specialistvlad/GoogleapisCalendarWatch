@@ -88,7 +88,7 @@ GoogleapisCalendarWatch.prototype.on = function (argument) {
 };
 
 /*
- * @desc
+ * @desc Call Google api method 'watch'. It enable sending information to our hook.
  *
  * @param  {object} params - parameters for request
  * @param  {string=} params.id - uuid format
@@ -121,7 +121,8 @@ GoogleapisCalendarWatch.prototype.watch = function (params, callback) {
 };
 
 /**
- * Gets events on the user's primary calendar.
+ * @desc Gets events on the user's primary calendar between dates.
+ * 
  * @param  {string} calendarId - email address
  * @param  {date} from - required new Date() or null
  * @param  {date} to - required new Date() or null
