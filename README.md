@@ -1,6 +1,18 @@
 # Demo app for googleapis-calendar-watch
 ## Information about demo project and module
+This sample app shows how to run Google's push notifications.
+
+Google manual [https://developers.google.com/google-apps/calendar/v3/push](https://developers.google.com/google-apps/calendar/v3/push)
 Registered domain [https://secure-mountain-3276.herokuapp.com](https://secure-mountain-3276.herokuapp.com)
+
+### Before you run APP
+1. Be careful. Google api method /v3/*/watch works only with server side auth
+2. You must check SSL domain validation. For example [https://www.sslshopper.com/ssl-checker.html](https://www.sslshopper.com/ssl-checker.html)
+You need have all green marks as ssl checker result, before you continue.
+3. Complete the site verification process using [https://www.google.com/webmasters/tools](https://www.google.com/webmasters/tools)
+You need upload file to the your server. Follow google manual please.
+4. Go to the Google Developers Console. In the sidebar on the left APIs & auth > Push, Click Add domains and add domain "secure-mountain-3276.herokuapp.com"
+5. Go to the Google Developers Console. In the sidebar on the left APIs & auth > Credentials, Click Create new "Cliend Id"and generate key in pem format for "Service account"
 
 ### Task
 1. We require a node.js module that has only one dependency, the googleapis module.
